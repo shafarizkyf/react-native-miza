@@ -1,0 +1,11 @@
+{
+  "git.ignoreLimitWarning": true,
+  "standard.autoFixOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "java.compile.nullAnalysis.mode": "automatic",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "java.configuration.updateBuildConfiguration": "interactive"
+}

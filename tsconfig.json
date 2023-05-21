@@ -1,0 +1,13 @@
+{
+  "extends": "@tsconfig/react-native/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "*": ["src/*"],
+      "@components": ["src/components"],
+      "@screens": ["src/screens"],
+      "@images": ["assets/images"],
+      "@svg": ["assets/svg"]
+    }
+  }
+}
