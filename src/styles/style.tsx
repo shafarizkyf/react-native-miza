@@ -240,19 +240,4 @@ export default StyleSheet.create({
   textRight: {
     textAlign: 'right',
   },
-  textMuted: {
-    color: '#9B9B9B',
-  },
-  textWhite: {
-    color: 'white',
-  },
-  textRed: {
-    color: 'red',
-  },
-  bgWhite: {
-    backgroundColor: 'white',
-  },
-  dark: {
-    color: '#333333',
-  },
 });

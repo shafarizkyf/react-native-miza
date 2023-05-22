@@ -10,8 +10,10 @@ import fontFamily from 'styles/fontFamily';
 import style from 'styles/style';
 import Header from './components/Header';
 import Checkbox from 'components/Checkbox';
+import Modal from 'components/Modal';
 
 const SignupScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
+  const [showTnc, setShowTnc] = useState<boolean>(false);
   const [form, setForm] = useState({
     firstName: '',
     lastName: '',
@@ -52,7 +54,7 @@ const SignupScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
       <View style={styles.tncContainer}>
         <Checkbox />
         <Text>I agree to the</Text>
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity activeOpacity={0.7} onPress={() => setShowTnc(true)}>
           <Text style={styles.termAndCondition}>Terms & Conditions</Text>
         </TouchableOpacity>
       </View>
@@ -65,6 +67,12 @@ const SignupScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
           <Text style={styles.signup}>Login</Text>
         </TouchableOpacity>
       </View>
+      <Modal
+        title="Terms and Conditions"
+        show={showTnc}
+        toogle={() => setShowTnc(false)}>
+        <Text>Lorem ipsum</Text>
+      </Modal>
     </View>
   );
 };
