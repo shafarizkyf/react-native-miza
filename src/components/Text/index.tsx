@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react';
 import {Text as RNText, StyleSheet, TextStyle} from 'react-native';
+import fontFamily from 'styles/fontFamily';
 
 type Props = {
   style?: TextStyle;
@@ -8,6 +9,7 @@ type Props = {
   light?: boolean;
   white?: boolean;
   center?: boolean;
+  bold?: boolean;
 };
 
 const Text = ({
@@ -17,6 +19,7 @@ const Text = ({
   light,
   white,
   center,
+  bold,
 }: Props) => (
   <RNText
     style={[
@@ -25,6 +28,7 @@ const Text = ({
       light && style.textLight,
       white && style.textWhite,
       center && style.textCenter,
+      bold && style.textBold,
       customStyle,
     ]}>
     {children}
@@ -33,13 +37,16 @@ const Text = ({
 
 const style = StyleSheet.create({
   text: {
-    fontFamily: 'PlusJakartaSans-Regular',
+    fontFamily: fontFamily.regular,
+  },
+  textBold: {
+    fontFamily: fontFamily.bold,
   },
   textSemiBold: {
-    fontFamily: 'PlusJakartaSans-SemiBold',
+    fontFamily: fontFamily.semiBold,
   },
   textLight: {
-    fontFamily: 'PlusJakartaSans-Light',
+    fontFamily: fontFamily.light,
   },
   textWhite: {
     color: '#fff',

@@ -138,6 +138,12 @@ export default StyleSheet.create({
   mb30: {
     marginBottom: 30,
   },
+  mb40: {
+    marginBottom: 40,
+  },
+  mb50: {
+    marginBottom: 50,
+  },
   mh5: {
     marginHorizontal: 5,
   },

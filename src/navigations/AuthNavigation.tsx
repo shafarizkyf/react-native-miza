@@ -1,14 +1,14 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import OnBoardingScreen from 'screens/OnBoardingScreen';
+import LoginScreen from 'screens/AuthScreen/LoginScreen';
 
 const Stack = createStackNavigator();
 
 const AuthNavigation = () => (
   <Stack.Navigator>
     <Stack.Screen
-      name="OnBoardingScreen"
-      component={OnBoardingScreen}
+      name="LoginScreen"
+      component={LoginScreen}
       options={{
         headerShown: false,
       }}
