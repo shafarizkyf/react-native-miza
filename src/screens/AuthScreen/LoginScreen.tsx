@@ -9,10 +9,30 @@ import color from 'styles/color';
 import fontFamily from 'styles/fontFamily';
 import style from 'styles/style';
 import Header from './components/Header';
+import LoginValidation from './validation/LoginValidation';
+import {getJoiFormError} from 'utils/functions';
 
 const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
+  const [errors, setErrors] = useState<{email?: string; password?: string}>({});
+
+  const onLogin = () => {
+    const validation = LoginValidation.validate(
+      {
+        email,
+        password,
+      },
+      {abortEarly: false},
+    );
+
+    if (validation.error) {
+      setErrors(getJoiFormError(validation.error.details));
+    } else {
+      setErrors({});
+    }
+  };
 
   return (
     <View style={[style.p20, style.mt30]}>
@@ -22,12 +42,14 @@ const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
         value={email}
         onChangeText={setEmail}
         textInputProps={{keyboardType: 'email-address'}}
+        errorMessage={errors.email}
       />
       <TextInput
         label="Password"
         value={password}
         textInputProps={{secureTextEntry: true}}
         onChangeText={setPassword}
+        errorMessage={errors.password}
       />
       <TouchableOpacity
         activeOpacity={0.6}
@@ -35,7 +57,7 @@ const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
         onPress={() => navigation.navigate('ForgotPasswordScreen')}>
         <Text style={styles.forgotPassword}>Forgot Password</Text>
       </TouchableOpacity>
-      <Button label="Login" />
+      <Button label="Login" onPress={onLogin} />
       <View style={styles.signupContainer}>
         <Text style={styles.muted}>New User?</Text>
         <TouchableOpacity

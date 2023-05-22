@@ -9,6 +9,7 @@ import {
 import Text from 'components/Text';
 import Icon from 'react-native-vector-icons/Feather';
 import color from 'styles/color';
+import styles from 'styles/style';
 import fontFamily from 'styles/fontFamily';
 import RenderIf from 'components/RenderIf';
 import {useState} from 'react';
@@ -20,6 +21,7 @@ type Props = {
   onChangeText?: (value: string) => void;
   textInputProps?: TextInputProps;
   containerStyle?: ViewStyle;
+  errorMessage?: string;
 };
 
 const TextInput = ({
@@ -29,6 +31,7 @@ const TextInput = ({
   placeholder,
   onChangeText,
   textInputProps,
+  errorMessage,
 }: Props) => {
   const [secureTextEntry, setSecureTextEntry] = useState<boolean>(
     textInputProps?.secureTextEntry || false,
@@ -56,6 +59,9 @@ const TextInput = ({
           </TouchableOpacity>
         </RenderIf>
       </View>
+      <RenderIf isTrue={!!errorMessage?.length}>
+        <Text style={styles.errorMessage}>{errorMessage}</Text>
+      </RenderIf>
     </View>
   );
 };
@@ -73,6 +79,7 @@ const style = StyleSheet.create({
     fontFamily: fontFamily.semiBold,
     color: color.dark,
     paddingBottom: 10,
+    flex: 1,
   },
   textInputContainer: {
     flexDirection: 'row',

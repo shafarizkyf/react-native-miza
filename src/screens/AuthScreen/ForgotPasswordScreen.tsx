@@ -2,12 +2,11 @@ import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import {AuthNavigationProps} from 'navigations/AuthNavigation';
 import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import color from 'styles/color';
-import fontFamily from 'styles/fontFamily';
+import {View} from 'react-native';
 import style from 'styles/style';
 import Header from './components/Header';
 import ForgotPasswordValidation from './validation/ForgotPasswordValidation';
+import {getJoiFormError} from 'utils/functions';
 
 type Props = {
   navigation: AuthNavigationProps;
@@ -15,6 +14,7 @@ type Props = {
 
 const ForgotPasswordScreen = ({navigation}: Props) => {
   const [email, setEmail] = useState<string>('');
+  const [errors, setErrors] = useState<{email?: string}>({});
 
   const onSend = () => {
     const validation = ForgotPasswordValidation.validate(
@@ -24,8 +24,9 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
     );
 
     if (validation.error) {
-      console.log('validation.error', validation.error.details);
+      setErrors(getJoiFormError(validation.error.details));
     } else {
+      setErrors({});
       navigation.navigate('OTPScreen');
     }
   };
@@ -41,32 +42,11 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
         value={email}
         onChangeText={setEmail}
         textInputProps={{keyboardType: 'email-address'}}
+        errorMessage={errors.email}
       />
       <Button label="Send" onPress={onSend} />
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  forgotPassword: {
-    fontSize: 14,
-    textAlign: 'right',
-    color: color.textInputLabel,
-  },
-  muted: {
-    color: color.textInputLabel,
-  },
-  signupContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginTop: 30,
-    alignSelf: 'center',
-  },
-  signup: {
-    color: color.primary,
-    fontFamily: fontFamily.bold,
-    marginLeft: 3,
-  },
-});
 
 export default ForgotPasswordScreen;

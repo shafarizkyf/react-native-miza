@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import color from './color';
 
 /**
  * Generic styling that will be used frequently
@@ -239,5 +240,10 @@ export default StyleSheet.create({
   },
   textRight: {
     textAlign: 'right',
+  },
+  errorMessage: {
+    fontSize: 10,
+    marginTop: 3,
+    color: color.error,
   },
 });
