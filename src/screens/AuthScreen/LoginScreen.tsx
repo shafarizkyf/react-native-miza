@@ -1,6 +1,7 @@
 import Button from 'components/Button';
 import Text from 'components/Text';
 import TextInput from 'components/TextInput';
+import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import color from 'styles/color';
@@ -8,17 +9,26 @@ import fontFamily from 'styles/fontFamily';
 import style from 'styles/style';
 
 const LoginScreen = () => {
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+
   return (
     <View style={[style.p20, style.mt30]}>
       <View style={style.mb30}>
         <Text style={styles.welcome}>Welcome back,</Text>
         <Text style={styles.muted}>Sign In to continue</Text>
       </View>
-      <TextInput label="Email" value="shafarizkyf@gmail.com" />
+      <TextInput
+        label="Email"
+        value={email}
+        onChangeText={setEmail}
+        textInputProps={{keyboardType: 'email-address'}}
+      />
       <TextInput
         label="Password"
-        value=""
+        value={password}
         textInputProps={{secureTextEntry: true}}
+        onChangeText={setPassword}
       />
       <TouchableOpacity activeOpacity={0.6} style={style.mb50}>
         <Text style={styles.forgotPassword}>Forgot Password</Text>
