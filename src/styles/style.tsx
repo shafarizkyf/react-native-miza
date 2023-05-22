@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import color from './color';
 
 /**
  * Generic styling that will be used frequently
@@ -138,6 +139,12 @@ export default StyleSheet.create({
   mb30: {
     marginBottom: 30,
   },
+  mb40: {
+    marginBottom: 40,
+  },
+  mb50: {
+    marginBottom: 50,
+  },
   mh5: {
     marginHorizontal: 5,
   },
@@ -234,19 +241,9 @@ export default StyleSheet.create({
   textRight: {
     textAlign: 'right',
   },
-  textMuted: {
-    color: '#9B9B9B',
-  },
-  textWhite: {
-    color: 'white',
-  },
-  textRed: {
-    color: 'red',
-  },
-  bgWhite: {
-    backgroundColor: 'white',
-  },
-  dark: {
-    color: '#333333',
+  errorMessage: {
+    fontSize: 10,
+    marginTop: 3,
+    color: color.error,
   },
 });
