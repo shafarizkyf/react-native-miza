@@ -1,23 +1,22 @@
 import Button from 'components/Button';
 import Text from 'components/Text';
 import TextInput from 'components/TextInput';
+import {AuthNavigationProps} from 'navigations/AuthNavigation';
 import {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import color from 'styles/color';
 import fontFamily from 'styles/fontFamily';
 import style from 'styles/style';
+import Header from './components/Header';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
   return (
     <View style={[style.p20, style.mt30]}>
-      <View style={style.mb30}>
-        <Text style={styles.welcome}>Welcome back,</Text>
-        <Text style={styles.muted}>Sign In to continue</Text>
-      </View>
+      <Header title="Greetings!" subtitle="Please sign-in to continue" />
       <TextInput
         label="Email"
         value={email}
@@ -36,7 +35,9 @@ const LoginScreen = () => {
       <Button label="Login" />
       <View style={styles.signupContainer}>
         <Text style={styles.muted}>New User?</Text>
-        <TouchableOpacity activeOpacity={0.6}>
+        <TouchableOpacity
+          activeOpacity={0.6}
+          onPress={() => navigation.navigate('SignupScreen')}>
           <Text style={styles.signup}>Signup</Text>
         </TouchableOpacity>
       </View>
@@ -49,10 +50,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     textAlign: 'right',
     color: color.textInputLabel,
-  },
-  welcome: {
-    fontFamily: fontFamily.bold,
-    fontSize: 22,
   },
   muted: {
     color: color.textInputLabel,
