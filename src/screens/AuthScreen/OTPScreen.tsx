@@ -26,7 +26,7 @@ const OTPScreen = () => {
   };
 
   return (
-    <View style={[style.flex1, style.p20]}>
+    <View style={[style.flex1, style.ph20, style.mt10]}>
       <Header
         title="OTP Verification"
         subtitle="Please enter 6 digits code that has been sent to your email"
