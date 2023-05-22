@@ -5,10 +5,14 @@ import {
 } from '@react-navigation/stack';
 import LoginScreen from 'screens/AuthScreen/LoginScreen';
 import SignupScreen from 'screens/AuthScreen/SignupScreen';
+import OTPScreen from 'screens/AuthScreen/OTPScreen';
+import StackHeader from './components/StackHeader';
+import color from 'styles/color';
 
 export type AuthParamlist = {
   LoginScreen: undefined;
   SignupScreen: undefined;
+  OTPScreen: undefined;
 };
 
 export type AuthNavigationProps = StackNavigationProp<
@@ -32,6 +36,16 @@ const AuthNavigation = () => (
       component={SignupScreen}
       options={{
         headerShown: false,
+      }}
+    />
+    <Stack.Screen
+      name="OTPScreen"
+      component={OTPScreen}
+      options={{
+        header: props => <StackHeader {...props} />,
+        cardStyle: {
+          backgroundColor: color.stackCardColor,
+        },
       }}
     />
   </Stack.Navigator>

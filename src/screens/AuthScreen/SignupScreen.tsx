@@ -27,6 +27,10 @@ const SignupScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
     setForm(cForm);
   };
 
+  const onSignUp = () => {
+    navigation.navigate('OTPScreen');
+  };
+
   return (
     <View style={[style.p20, style.mt30]}>
       <Header title="Create Account" subtitle="Welcome to our platform" />
@@ -58,7 +62,7 @@ const SignupScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
           <Text style={styles.termAndCondition}>Terms & Conditions</Text>
         </TouchableOpacity>
       </View>
-      <Button label="Sign Up" />
+      <Button label="Sign Up" onPress={onSignUp} />
       <View style={styles.signupContainer}>
         <Text style={styles.muted}>Already have an account?</Text>
         <TouchableOpacity

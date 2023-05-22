@@ -59,7 +59,7 @@ const style = StyleSheet.create({
     padding: 20,
   },
   title: {
-    color: color.primary,
+    color: color.dark,
     fontSize: 16,
     fontFamily: fontFamily.bold,
   },
