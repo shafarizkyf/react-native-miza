@@ -11,6 +11,7 @@ import style from 'styles/style';
 import Header from './components/Header';
 import LoginValidation from './validation/LoginValidation';
 import {getJoiFormError} from 'utils/functions';
+import Spinner from 'components/Spinner';
 
 const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
   const [email, setEmail] = useState<string>('');
@@ -35,7 +36,7 @@ const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
   };
 
   return (
-    <View style={[style.p20, style.mt30]}>
+    <View style={[style.flex1, style.p20, style.mt30]}>
       <Header title="Greetings!" subtitle="Please sign-in to continue" />
       <TextInput
         label="Email"
