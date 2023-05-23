@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
 import AuthNavigation from 'navigations/AuthNavigation';
@@ -11,6 +11,10 @@ import Spinner from 'components/Spinner';
 import {Linking} from 'react-native';
 
 const App = () => {
+  // to track current screen name
+  const navigationRef = useRef<any>();
+  const routeNameRef = useRef<string | undefined>(undefined);
+
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
   const [hasOnboard, setHasOnBoard] = useState<boolean>(false);
   const [user, setUser] = useState<string | null>(null);
@@ -71,7 +75,25 @@ const App = () => {
 
   return (
     <AppContext.Provider value={appContext}>
-      <NavigationContainer linking={linking} fallback={<Spinner />}>
+      <NavigationContainer
+        ref={navigationRef}
+        onReady={() => {
+          routeNameRef.current = navigationRef.current.getCurrentRoute().name;
+        }}
+        onStateChange={async () => {
+          const previousRouteName = routeNameRef.current;
+          const currentRouteName = navigationRef.current.getCurrentRoute().name;
+
+          if (previousRouteName !== currentRouteName) {
+            await analytics().logScreenView({
+              screen_name: currentRouteName,
+              screen_class: currentRouteName,
+            });
+          }
+          routeNameRef.current = currentRouteName;
+        }}
+        linking={linking}
+        fallback={<Spinner />}>
         <AuthNavigation />
       </NavigationContainer>
     </AppContext.Provider>
