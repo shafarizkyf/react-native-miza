@@ -2,6 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
 import messaging from '@react-native-firebase/messaging';
+import notifee from '@notifee/react-native';
 import {request, PERMISSIONS} from 'react-native-permissions';
 import AuthNavigation from 'navigations/AuthNavigation';
 import AppContext, {AppContextProps} from 'context/AppContext';
@@ -13,6 +14,7 @@ import Spinner from 'components/Spinner';
 import {Linking, Platform} from 'react-native';
 import localStorage, {STORAGE_KEYS} from 'utils/localStorage';
 import MainNavigation from 'navigations/MainNavigation';
+import notification from 'utils/notification';
 
 const App = () => {
   // to track current screen name
@@ -41,6 +43,9 @@ const App = () => {
         if (enabled) {
           console.log('requestPermissions:', authStatus);
         }
+
+        // Request permissions (required for iOS)
+        await notifee.requestPermission();
       }
 
       if (Platform.OS === 'android') {
@@ -129,6 +134,13 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('remoteMessage', JSON.stringify(remoteMessage));
+      if (remoteMessage.notification) {
+        notification.show(
+          remoteMessage.notification.title || '',
+          remoteMessage.notification.body || '',
+          remoteMessage.data,
+        );
+      }
     });
 
     return unsubscribe;
