@@ -9,6 +9,7 @@ import {SPLASH_SCREEN_DURATION} from 'config/splashscreen';
 import {linking} from 'config/linking';
 import Spinner from 'components/Spinner';
 import {Linking} from 'react-native';
+import localStorage, {STORAGE_KEYS} from 'utils/localStorage';
 
 const App = () => {
   // to track current screen name
@@ -36,10 +37,23 @@ const App = () => {
 
   /**
    * splashcreen time and add analytic
+   * skip onboarding process if the user already seen once
    */
 
   useEffect(() => {
+    // add analytics
     analytics().logAppOpen();
+
+    // skipping onboarding process
+    Promise.resolve(localStorage.get(STORAGE_KEYS.ONBOARDING)).then(
+      hadOnboarding => {
+        if (hadOnboarding) {
+          setHasOnBoard(hadOnboarding);
+        }
+      },
+    );
+
+    // remove splashscreen after a certain period of time
     const timeoutId = setTimeout(() => {
       setShowSplashScreen(false);
     }, Number(SPLASH_SCREEN_DURATION));
