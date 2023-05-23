@@ -8,6 +8,7 @@ import SplashScreen from 'screens/SplashScreen';
 import {SPLASH_SCREEN_DURATION} from 'config/splashscreen';
 import {linking} from 'config/linking';
 import Spinner from 'components/Spinner';
+import {Linking} from 'react-native';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
@@ -21,14 +22,40 @@ const App = () => {
     setUser,
   };
 
+  /**
+   * handle deep link
+   */
+
+  const handleDeepLink = async ({url}: {url: string}) => {
+    console.log('url', url);
+  };
+
+  /**
+   * splashcreen time and add analytic
+   */
+
   useEffect(() => {
     analytics().logAppOpen();
-
     const timeoutId = setTimeout(() => {
       setShowSplashScreen(false);
     }, Number(SPLASH_SCREEN_DURATION));
     return () => clearTimeout(timeoutId);
   }, []);
+
+  /**
+   * add deep link listener
+   */
+
+  useEffect(() => {
+    const linkingEvent = Linking.addEventListener('url', handleDeepLink);
+    Linking.getInitialURL().then(url => {
+      if (url) {
+        handleDeepLink({url});
+      }
+    });
+
+    return () => linkingEvent.remove();
+  }, [handleDeepLink]);
 
   if (showSplashScreen) {
     return <SplashScreen />;
