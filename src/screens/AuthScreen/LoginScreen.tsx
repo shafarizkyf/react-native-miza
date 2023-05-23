@@ -3,7 +3,7 @@ import Button from 'components/Button';
 import Text from 'components/Text';
 import TextInput from 'components/TextInput';
 import {AuthNavigationProps} from 'navigations/AuthNavigation';
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import color from 'styles/color';
@@ -12,8 +12,11 @@ import style from 'styles/style';
 import Header from './components/Header';
 import LoginValidation from './validation/LoginValidation';
 import {getJoiFormError} from 'utils/functions';
+import AppContext from 'context/AppContext';
+import localStorage, {STORAGE_KEYS} from 'utils/localStorage';
 
 const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
+  const {setUser} = useContext(AppContext);
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
 
@@ -36,6 +39,9 @@ const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
       });
 
       setErrors({});
+      Promise.resolve(localStorage.set(STORAGE_KEYS.USER, email)).then(() => {
+        setUser(email);
+      });
     }
   };
 

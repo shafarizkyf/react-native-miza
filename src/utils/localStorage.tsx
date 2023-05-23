@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const STORAGE_KEYS = {
   ONBOARDING: 'onboarding',
-  LOGIN: 'login',
+  USER: 'user',
 };
 
 const set = async (key: string, data: any) => {

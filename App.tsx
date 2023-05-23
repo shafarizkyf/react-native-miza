@@ -10,6 +10,7 @@ import {linking} from 'config/linking';
 import Spinner from 'components/Spinner';
 import {Linking} from 'react-native';
 import localStorage, {STORAGE_KEYS} from 'utils/localStorage';
+import MainNavigation from 'navigations/MainNavigation';
 
 const App = () => {
   // to track current screen name
@@ -25,6 +26,41 @@ const App = () => {
     user,
     setHasOnBoard,
     setUser,
+  };
+
+  const isAuthenticated = async () => {
+    try {
+      return await localStorage.get(STORAGE_KEYS.USER);
+    } catch (error) {
+      console.log('error', error);
+      return null;
+    }
+  };
+
+  const isOnBoarding = async () => {
+    try {
+      return await localStorage.get(STORAGE_KEYS.ONBOARDING);
+    } catch (error) {
+      console.log('error', error);
+      return false;
+    }
+  };
+
+  const nextScreen = async () => {
+    const [onboarding, user] = await Promise.all([
+      isOnBoarding(),
+      isAuthenticated(),
+    ]);
+
+    // user will be redirected to home screen if already logged in
+    if (user) {
+      setUser(user);
+    }
+
+    // skip onboarding if user already seen once
+    if (onboarding) {
+      setHasOnBoard(onboarding);
+    }
   };
 
   /**
@@ -44,18 +80,10 @@ const App = () => {
     // add analytics
     analytics().logAppOpen();
 
-    // skipping onboarding process
-    Promise.resolve(localStorage.get(STORAGE_KEYS.ONBOARDING)).then(
-      hadOnboarding => {
-        if (hadOnboarding) {
-          setHasOnBoard(hadOnboarding);
-        }
-      },
-    );
-
     // remove splashscreen after a certain period of time
     const timeoutId = setTimeout(() => {
       setShowSplashScreen(false);
+      nextScreen();
     }, Number(SPLASH_SCREEN_DURATION));
     return () => clearTimeout(timeoutId);
   }, []);
@@ -108,7 +136,7 @@ const App = () => {
         }}
         linking={linking}
         fallback={<Spinner />}>
-        <AuthNavigation />
+        {user ? <MainNavigation /> : <AuthNavigation />}
       </NavigationContainer>
     </AppContext.Provider>
   );
