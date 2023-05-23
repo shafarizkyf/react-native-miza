@@ -21,6 +21,7 @@ const show = async (
       android: {
         channelId,
         importance: AndroidImportance.HIGH,
+        smallIcon: 'ic_notification',
       },
       data,
     });
