@@ -1,7 +1,8 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import Carousel, {ICarouselInstance} from 'react-native-reanimated-carousel';
+import analytics from '@react-native-firebase/analytics';
 import color from 'styles/color';
 import Text from 'components/Text';
 import Slider from './components/Slider';
@@ -36,6 +37,7 @@ const OnBoardingScreen = () => {
 
   const continueOrSkip = () => {
     if (carouselRef.current) {
+      analytics().logTutorialComplete();
       setHasOnBoard(true);
     }
   };
@@ -44,6 +46,10 @@ const OnBoardingScreen = () => {
   const onProgressChange = (offset: number, absoluteProgress: number) => {
     setProgressiveIndex(absoluteProgress);
   };
+
+  useEffect(() => {
+    analytics().logTutorialBegin();
+  }, []);
 
   return (
     <View style={style.container}>

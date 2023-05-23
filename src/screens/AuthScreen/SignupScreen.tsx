@@ -1,3 +1,4 @@
+import analytics from '@react-native-firebase/analytics';
 import Button from 'components/Button';
 import Text from 'components/Text';
 import TextInput from 'components/TextInput';
@@ -54,6 +55,10 @@ const SignupScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
       setErrors(getJoiFormError(validation.error.details));
     } else {
       setErrors({});
+      analytics().logSignUp({
+        method: 'email',
+      });
+
       navigation.navigate('OTPScreen');
     }
   };
