@@ -6,7 +6,7 @@ export type AppContextProps = {
   setHasOnBoard: (value: boolean) => void;
   // set and get store authenticated user
   user: string | null;
-  setUser: (value: string) => void;
+  setUser: (value: string | null) => void;
 };
 
 export default createContext<AppContextProps>({
