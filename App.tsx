@@ -1,6 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
+import messaging from '@react-native-firebase/messaging';
+import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import AuthNavigation from 'navigations/AuthNavigation';
 import AppContext, {AppContextProps} from 'context/AppContext';
 import OnBoardingScreen from 'screens/OnBoardingScreen';
@@ -8,7 +10,7 @@ import SplashScreen from 'screens/SplashScreen';
 import {SPLASH_SCREEN_DURATION} from 'config/splashscreen';
 import {linking} from 'config/linking';
 import Spinner from 'components/Spinner';
-import {Linking} from 'react-native';
+import {Linking, Platform} from 'react-native';
 import localStorage, {STORAGE_KEYS} from 'utils/localStorage';
 import MainNavigation from 'navigations/MainNavigation';
 
@@ -26,6 +28,28 @@ const App = () => {
     user,
     setHasOnBoard,
     setUser,
+  };
+
+  const requestPermissions = async () => {
+    try {
+      if (Platform.OS === 'ios') {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+        if (enabled) {
+          console.log('requestPermissions:', authStatus);
+        }
+      }
+
+      if (Platform.OS === 'android') {
+        const response = await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
+        console.log('requestPermissions: ', response);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   const isAuthenticated = async () => {
@@ -86,6 +110,18 @@ const App = () => {
       nextScreen();
     }, Number(SPLASH_SCREEN_DURATION));
     return () => clearTimeout(timeoutId);
+  }, []);
+
+  /**
+   * handle Push Notification
+   */
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('remoteMessage', JSON.stringify(remoteMessage));
+    });
+
+    return unsubscribe;
   }, []);
 
   /**
