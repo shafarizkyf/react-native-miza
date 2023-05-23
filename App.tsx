@@ -4,8 +4,11 @@ import analytics from '@react-native-firebase/analytics';
 import AuthNavigation from 'navigations/AuthNavigation';
 import AppContext, {AppContextProps} from 'context/AppContext';
 import OnBoardingScreen from 'screens/OnBoardingScreen';
+import SplashScreen from 'screens/SplashScreen';
+import {SPLASH_SCREEN_DURATION} from 'config/splashscreen';
 
 const App = () => {
+  const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
   const [hasOnboard, setHasOnBoard] = useState<boolean>(false);
   const [user, setUser] = useState<string | null>(null);
 
@@ -18,7 +21,16 @@ const App = () => {
 
   useEffect(() => {
     analytics().logAppOpen();
+
+    const timeoutId = setTimeout(() => {
+      setShowSplashScreen(false);
+    }, Number(SPLASH_SCREEN_DURATION));
+    return () => clearTimeout(timeoutId);
   }, []);
+
+  if (showSplashScreen) {
+    return <SplashScreen />;
+  }
 
   if (!hasOnboard) {
     return (
