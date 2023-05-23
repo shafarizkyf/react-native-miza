@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
 import messaging from '@react-native-firebase/messaging';
-import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import {request, PERMISSIONS} from 'react-native-permissions';
 import AuthNavigation from 'navigations/AuthNavigation';
 import AppContext, {AppContextProps} from 'context/AppContext';
 import OnBoardingScreen from 'screens/OnBoardingScreen';
@@ -49,6 +49,16 @@ const App = () => {
       }
     } catch (error) {
       console.log('error', error);
+    }
+  };
+
+  const initUser = async () => {
+    try {
+      await messaging().registerDeviceForRemoteMessages();
+      const token = await messaging().getToken();
+      console.log('fcm token: ', token);
+    } catch (error) {
+      console.log('Unable to get fcm token: ', error);
     }
   };
 
@@ -138,6 +148,13 @@ const App = () => {
 
     return () => linkingEvent.remove();
   }, [handleDeepLink]);
+
+  useEffect(() => {
+    if (user) {
+      requestPermissions();
+      initUser();
+    }
+  }, [user]);
 
   if (showSplashScreen) {
     return <SplashScreen />;
