@@ -6,6 +6,8 @@ import AppContext, {AppContextProps} from 'context/AppContext';
 import OnBoardingScreen from 'screens/OnBoardingScreen';
 import SplashScreen from 'screens/SplashScreen';
 import {SPLASH_SCREEN_DURATION} from 'config/splashscreen';
+import {linking} from 'config/linking';
+import Spinner from 'components/Spinner';
 
 const App = () => {
   const [showSplashScreen, setShowSplashScreen] = useState<boolean>(true);
@@ -42,7 +44,7 @@ const App = () => {
 
   return (
     <AppContext.Provider value={appContext}>
-      <NavigationContainer>
+      <NavigationContainer linking={linking} fallback={<Spinner />}>
         <AuthNavigation />
       </NavigationContainer>
     </AppContext.Provider>
