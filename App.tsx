@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
+import analytics from '@react-native-firebase/analytics';
 import AuthNavigation from 'navigations/AuthNavigation';
 import AppContext, {AppContextProps} from 'context/AppContext';
 import OnBoardingScreen from 'screens/OnBoardingScreen';
@@ -14,6 +15,10 @@ const App = () => {
     setHasOnBoard,
     setUser,
   };
+
+  useEffect(() => {
+    analytics().logAppOpen();
+  }, []);
 
   if (!hasOnboard) {
     return (

@@ -1,3 +1,4 @@
+import analytics from '@react-native-firebase/analytics';
 import Button from 'components/Button';
 import Text from 'components/Text';
 import TextInput from 'components/TextInput';
@@ -11,7 +12,6 @@ import style from 'styles/style';
 import Header from './components/Header';
 import LoginValidation from './validation/LoginValidation';
 import {getJoiFormError} from 'utils/functions';
-import Spinner from 'components/Spinner';
 
 const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
   const [email, setEmail] = useState<string>('');
@@ -31,6 +31,10 @@ const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
     if (validation.error) {
       setErrors(getJoiFormError(validation.error.details));
     } else {
+      analytics().logLogin({
+        method: 'email',
+      });
+
       setErrors({});
     }
   };

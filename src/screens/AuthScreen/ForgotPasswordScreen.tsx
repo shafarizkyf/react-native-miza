@@ -1,3 +1,4 @@
+import analytics from '@react-native-firebase/analytics';
 import Button from 'components/Button';
 import TextInput from 'components/TextInput';
 import {AuthNavigationProps} from 'navigations/AuthNavigation';
@@ -27,6 +28,10 @@ const ForgotPasswordScreen = ({navigation}: Props) => {
       setErrors(getJoiFormError(validation.error.details));
     } else {
       setErrors({});
+      analytics().logEvent('ForgotPassword', {
+        email,
+      });
+
       navigation.navigate('OTPScreen');
     }
   };
