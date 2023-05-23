@@ -19,7 +19,7 @@ const HomeScreen = () => {
   };
 
   return (
-    <View style={style.flex1}>
+    <View style={[style.flex1, style.p20]}>
       <Text>Home Screen</Text>
       <Button label="Logout" style={style.mt40} onPress={logout} />
     </View>

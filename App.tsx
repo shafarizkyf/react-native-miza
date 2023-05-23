@@ -1,6 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import analytics from '@react-native-firebase/analytics';
+import messaging from '@react-native-firebase/messaging';
+import notifee from '@notifee/react-native';
+import {request, PERMISSIONS} from 'react-native-permissions';
 import AuthNavigation from 'navigations/AuthNavigation';
 import AppContext, {AppContextProps} from 'context/AppContext';
 import OnBoardingScreen from 'screens/OnBoardingScreen';
@@ -8,9 +11,10 @@ import SplashScreen from 'screens/SplashScreen';
 import {SPLASH_SCREEN_DURATION} from 'config/splashscreen';
 import {linking} from 'config/linking';
 import Spinner from 'components/Spinner';
-import {Linking} from 'react-native';
+import {Linking, Platform} from 'react-native';
 import localStorage, {STORAGE_KEYS} from 'utils/localStorage';
 import MainNavigation from 'navigations/MainNavigation';
+import notification from 'utils/notification';
 
 const App = () => {
   // to track current screen name
@@ -26,6 +30,41 @@ const App = () => {
     user,
     setHasOnBoard,
     setUser,
+  };
+
+  const requestPermissions = async () => {
+    try {
+      if (Platform.OS === 'ios') {
+        const authStatus = await messaging().requestPermission();
+        const enabled =
+          authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+          authStatus === messaging.AuthorizationStatus.PROVISIONAL;
+
+        if (enabled) {
+          console.log('requestPermissions:', authStatus);
+        }
+
+        // Request permissions (required for iOS)
+        await notifee.requestPermission();
+      }
+
+      if (Platform.OS === 'android') {
+        const response = await request(PERMISSIONS.ANDROID.POST_NOTIFICATIONS);
+        console.log('requestPermissions: ', response);
+      }
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
+  const initUser = async () => {
+    try {
+      await messaging().registerDeviceForRemoteMessages();
+      const token = await messaging().getToken();
+      console.log('fcm token: ', token);
+    } catch (error) {
+      console.log('Unable to get fcm token: ', error);
+    }
   };
 
   const isAuthenticated = async () => {
@@ -89,6 +128,25 @@ const App = () => {
   }, []);
 
   /**
+   * handle Push Notification
+   */
+
+  useEffect(() => {
+    const unsubscribe = messaging().onMessage(async remoteMessage => {
+      console.log('remoteMessage', JSON.stringify(remoteMessage));
+      if (remoteMessage.notification) {
+        notification.show(
+          remoteMessage.notification.title || '',
+          remoteMessage.notification.body || '',
+          remoteMessage.data,
+        );
+      }
+    });
+
+    return unsubscribe;
+  }, []);
+
+  /**
    * add deep link listener
    */
 
@@ -102,6 +160,13 @@ const App = () => {
 
     return () => linkingEvent.remove();
   }, [handleDeepLink]);
+
+  useEffect(() => {
+    if (user) {
+      requestPermissions();
+      initUser();
+    }
+  }, [user]);
 
   if (showSplashScreen) {
     return <SplashScreen />;
