@@ -22,6 +22,7 @@ const show = async (
         channelId,
         importance: AndroidImportance.HIGH,
         smallIcon: 'ic_notification',
+        largeIcon: require('images/logo_square.png'),
       },
       data,
     });
