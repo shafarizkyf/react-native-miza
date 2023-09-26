@@ -59,7 +59,10 @@ const App = () => {
 
   const initUser = async () => {
     try {
-      await messaging().registerDeviceForRemoteMessages();
+      if (!messaging().isDeviceRegisteredForRemoteMessages) {
+        await messaging().registerDeviceForRemoteMessages();
+      }
+
       const token = await messaging().getToken();
       console.log('fcm token: ', token);
     } catch (error) {
