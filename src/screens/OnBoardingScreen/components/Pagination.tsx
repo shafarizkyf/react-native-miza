@@ -6,39 +6,44 @@ type Props = {
   activeColor: string;
   inactiveColor: string;
   activeIndex: number;
-  index: number;
+  length: number;
 };
 
 const Pagination = ({
   activeColor,
   inactiveColor,
-  index,
   activeIndex,
+  length,
 }: Props) => {
-  const getProgressIndicator = () => {
+  const getProgressIndicator = (index: number) => {
     if (index === 0) {
       return 1;
     }
-
-    if (index === 1) {
-      return clamp(activeIndex, 0, 1);
+    if (index < length) {
+      return clamp(activeIndex - (index - 1), 0, 1);
     }
 
-    return clamp(activeIndex - 1, 0, 1);
+    return 0;
   };
 
   return (
-    <View style={[styles.dot, {backgroundColor: inactiveColor}]}>
-      <View
-        style={[
-          styles.dot,
-          {
-            backgroundColor: activeColor,
-            width: 5 * getProgressIndicator(),
-          },
-        ]}
-      />
-    </View>
+    <>
+      {new Array(length).fill('').map((_, i) => (
+        <View
+          style={[styles.dot, {backgroundColor: inactiveColor}]}
+          key={`dot-${i}`}>
+          <View
+            style={[
+              styles.dot,
+              {
+                backgroundColor: activeColor,
+                width: 5 * getProgressIndicator(i),
+              },
+            ]}
+          />
+        </View>
+      ))}
+    </>
   );
 };
 

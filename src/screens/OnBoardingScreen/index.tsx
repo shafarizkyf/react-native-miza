@@ -75,13 +75,7 @@ const OnBoardingScreen = () => {
         />
       </GestureHandlerRootView>
       <View style={style.dots}>
-        {SLIDERS.map((_, index) => (
-          <Pagination
-            key={`Pagination-${index}`}
-            activeIndex={progressiveIndex}
-            index={index}
-          />
-        ))}
+        <Pagination activeIndex={progressiveIndex} length={SLIDERS.length} />
       </View>
     </View>
   );
