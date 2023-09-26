@@ -11,6 +11,7 @@ module.exports = {
           '@images': './assets/images',
           '@svg': './assets/svg',
           '@components': './src/components',
+          '@config': './src/config',
           '@screens': './src/screens',
         },
       },

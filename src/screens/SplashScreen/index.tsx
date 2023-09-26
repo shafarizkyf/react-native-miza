@@ -3,7 +3,7 @@ import {MotiImage} from 'moti';
 import {
   SPLASH_SCREEN_DELAY_DURATION,
   SPLASH_SCREEN_TRANSITION_OUT_DURATION,
-} from '../../config/splashscreen';
+} from 'config/splashscreen';
 import style from 'styles/style';
 
 const {width: WIDTH} = Dimensions.get('window');

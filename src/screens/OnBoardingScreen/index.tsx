@@ -8,6 +8,7 @@ import Text from 'components/Text';
 import Slider from './components/Slider';
 import Pagination from './components/Pagination';
 import AppContext from 'context/AppContext';
+import localStorage, {STORAGE_KEYS} from 'utils/localStorage';
 
 const {width: wWidth, height: wHeight} = Dimensions.get('window');
 
@@ -39,6 +40,7 @@ const OnBoardingScreen = () => {
     if (carouselRef.current) {
       analytics().logTutorialComplete();
       setHasOnBoard(true);
+      localStorage.set(STORAGE_KEYS.ONBOARDING, true);
     }
   };
 
@@ -73,13 +75,7 @@ const OnBoardingScreen = () => {
         />
       </GestureHandlerRootView>
       <View style={style.dots}>
-        {SLIDERS.map((_, index) => (
-          <Pagination
-            key={`Pagination-${index}`}
-            activeIndex={progressiveIndex}
-            index={index}
-          />
-        ))}
+        <Pagination activeIndex={progressiveIndex} length={SLIDERS.length} />
       </View>
     </View>
   );

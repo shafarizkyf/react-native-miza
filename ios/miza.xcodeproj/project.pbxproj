@@ -96,6 +96,7 @@
 		85A53A952A1B65570093C01E /* Foundation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		85A53A962A1B65570093C01E /* Ionicons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		85A53A972A1B65570093C01E /* EvilIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
+		85DE970E2A1D05D200C58E75 /* miza.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = miza.entitlements; path = miza/miza.entitlements; sourceTree = "<group>"; };
 		85EA5BE42A1C940B000ED36E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-miza-mizaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-miza-mizaTests.release.xcconfig"; path = "Target Support Files/Pods-miza-mizaTests/Pods-miza-mizaTests.release.xcconfig"; sourceTree = "<group>"; };
 		8D080EF38A564461BF0ED0CE /* PlusJakartaSans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PlusJakartaSans-Bold.ttf"; path = "../assets/fonts/PlusJakartaSans-Bold.ttf"; sourceTree = "<group>"; };
@@ -148,6 +149,7 @@
 		13B07FAE1A68108700A75B9A /* miza */ = {
 			isa = PBXGroup;
 			children = (
+				85DE970E2A1D05D200C58E75 /* miza.entitlements */,
 				85A53A872A1B64EB0093C01E /* Fonts */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.mm */,
@@ -639,6 +641,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = miza/miza.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = miza/Info.plist;
@@ -667,6 +670,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = miza/miza.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = miza/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
