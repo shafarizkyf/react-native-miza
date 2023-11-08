@@ -19,3 +19,5 @@ APP_ID is here
 https://console.firebase.google.com/u/0/project/firebase-project-id/settings/general/android-bundle-name > Android Apps > APP ID
 
 `firebase appdistribution:distribute ./android/app/build/outputs/apk/release/app-release.apk --token "$FIREBASE_TOKEN" --app APP_ID --groups "Internal" --release-notes "init build"`
+
+test trigger github action
