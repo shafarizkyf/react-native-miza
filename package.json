@@ -23,9 +23,11 @@
     "@react-native-firebase/messaging": "^17.5.0",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
+    "big-integer": "^1.6.52",
     "dayjs": "^1.11.7",
     "joi": "^17.9.2",
     "moti": "^0.25.3",
+    "permissionless": "^0.0.18",
     "react": "18.2.0",
     "react-native": "0.71.8",
     "react-native-gesture-handler": "^2.10.1",
@@ -38,7 +40,8 @@
     "react-native-screens": "^3.20.0",
     "react-native-vector-icons": "^9.2.0",
     "react-timer-hook": "^3.0.6",
-    "text-encoding-polyfill": "^0.6.7"
+    "text-encoding-polyfill": "^0.6.7",
+    "viem": "^1.21.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

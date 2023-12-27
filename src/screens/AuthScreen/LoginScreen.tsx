@@ -14,6 +14,7 @@ import LoginValidation from './validation/LoginValidation';
 import {getJoiFormError} from 'utils/functions';
 import AppContext from 'context/AppContext';
 import localStorage, {STORAGE_KEYS} from 'utils/localStorage';
+import createAccount from 'libs/pimlico/create_account';
 
 const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
   const {setUser} = useContext(AppContext);
@@ -23,6 +24,9 @@ const LoginScreen = ({navigation}: {navigation: AuthNavigationProps}) => {
   const [errors, setErrors] = useState<{email?: string; password?: string}>({});
 
   const onLogin = () => {
+    createAccount();
+    return;
+
     const validation = LoginValidation.validate(
       {
         email,
